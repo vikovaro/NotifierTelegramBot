@@ -14,16 +14,9 @@ export class User extends Model implements IUser {
         allowNull: false,
     })
     username: string;
-
-    @Column({
-        type: DataType.DATE,
-        defaultValue: DataType.NOW,
-    })
-    lastActivity: Date;
 }
 
 export interface IUser {
     chatId: number;
     username: string;
-    lastActivity: Date;
 }

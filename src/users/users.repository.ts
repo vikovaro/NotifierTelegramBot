@@ -22,7 +22,6 @@ export class UserRepository {
             {
                 chatId,
                 username,
-                lastActivity: new Date(),
             },
             {
                 raw: true,
