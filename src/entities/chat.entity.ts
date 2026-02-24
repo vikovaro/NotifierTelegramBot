@@ -1,4 +1,4 @@
-export interface IUser {
+export interface IChat {
     chatId: bigint;
     username: string;
 }
