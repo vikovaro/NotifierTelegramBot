@@ -7,7 +7,11 @@ export class CoreService {
 
     async sendBroadcastMessage(message: string) {
         if (!message || message.trim().length === 0) {
-            throw new Error('Message cannot be empty');
+            throw new Error('Message cannot be empty.');
+        }
+
+        if (message.length > 4095) {
+            throw new Error('Message too long.');
         }
 
         const result = await this.telegramService.broadcastMessage(message);
