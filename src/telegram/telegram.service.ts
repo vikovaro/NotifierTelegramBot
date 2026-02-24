@@ -1,14 +1,14 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Bot } from 'grammy';
-import { UserService } from '../users/user.service';
 import { ConfigService } from '@nestjs/config';
+import { ChatService } from '../chats/chat.service';
 
 @Injectable()
 export class TelegramService implements OnModuleInit {
     private bot: Bot;
 
     constructor(
-        private userService: UserService,
+        private chatService: ChatService,
         private configService: ConfigService,
     ) {}
 
@@ -24,7 +24,7 @@ export class TelegramService implements OnModuleInit {
             const chatId = ctx.chat.id;
             const username = ctx.from!.username || ctx.from!.first_name;
 
-            await this.userService.addUser(chatId, username);
+            await this.chatService.addChat(chatId, username);
 
             await ctx.reply(`Привет, ${username}! Теперь ты подписан на рассылку.`);
         });
@@ -34,18 +34,18 @@ export class TelegramService implements OnModuleInit {
     }
 
     async broadcastMessage(message: string): Promise<{total: number}> {
-        const users = await this.userService.getAllUsers();
+        const chats = await this.chatService.getAllChats();
         let total = 0;
 
-        for (const user of users) {
+        for (const chat of chats) {
 
-            console.log(`test ${user}`);
+            console.log(`test ${chat}`);
 
             try {
-                await this.bot.api.sendMessage(user.chatId, message);
+                await this.bot.api.sendMessage(chat.chatId.toString(), message);
                 total++;
             } catch (err) {
-                console.error(`Error by sending message to ${user.username}: ${err}`);
+                console.error(`Error by sending message to ${chat.username}: ${err}`);
             }
         }
 
