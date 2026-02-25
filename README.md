@@ -5,7 +5,7 @@ Backend проект с функционалом рассылки сообщен
 ## Используемые технологии
 
 - **NestJS**
-- **Sequelize**
+- **Prisma**
 - **grammy**
 
 ### Содержимое env файла
@@ -21,6 +21,25 @@ TELEGRAM_BOT_TOKEN=""
 
 ## Документация
 
+### POST `/login`
+
+Авторизация через логин/пароль
+
+**Тело запроса:**
+```json
+{
+  "login": "admin",
+  "password": "password"
+}
+```
+**Тело ответа:**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+}
+```
+
+
 ### POST `/broadcast`
 
 Рассылает сообщение всем пользователям Telegram-бота.
@@ -32,7 +51,7 @@ TELEGRAM_BOT_TOKEN=""
   "message": "Ваш текст сообщения"
 }
 ```
-**Пример ответа:**
+**Тело ответа:**
 ```json
 {
   "status": "success",
